@@ -1,32 +1,73 @@
-import React from 'react'
-import ReactDOM from 'react-dom'
+import React from "react";
+import ReactDOM from "react-dom";
 
-const Hello = (props) => {
-return(
+const Header = props => {
+  return (
     <div>
-      <p>Hello {props.name}, your are {props.age} !</p>
+      <h1>{props.course}</h1>
     </div>
-  )
-}
+  );
+};
+
+const Content = props => {
+  return (
+    <div>
+      <p>
+        {props.part1} {props.exercises1}
+      </p>
+      <p>
+        {props.part2} {props.exercises2}
+      </p>
+      <p>
+        {props.part3} {props.exercises3}
+      </p>
+    </div>
+  );
+};
+
+const Total = props => {
+  return (
+    <div>
+      <p>
+        <p>
+          Number of exercises:{" "}
+          {props.exercises1 + props.exercises2 + props.exercises3}
+        </p>
+      </p>
+    </div>
+  );
+};
 
 const App = () => {
-  console.log('Hello from compontent')
-  const now = new Date()
-  const a = 100
-  const b =200
+  const course = "Half Stack application development";
 
-  const name = 'Wallcot'
-  const age = 31
+  const part1 = "Fundamentals of React";
+  const exercises1 = 10;
+
+  const part2 = "Using props to pass data";
+  const exercises2 = 7;
+
+  const part3 = "State of a component";
+  const exercises3 = 14;
+
   return (
-      <div>
-        <p>Hello world, It's {now.toString()}</p>
-        <p>
-          {a} + {b} = {a+ b}
-        </p>
-        <Hello name="Henry" age = {20+13}/>
-        <Hello name={name} age = {age}/>
-      </div>
-  )
-}
+    <div>
+      <Header course={course}></Header>
+      <Content
+        part1={part1}
+        exercises1={exercises1}
+        part2={part2}
+        exercises2={exercises2}
+        part3={part3}
+        exercises3={exercises3}
+      />
+      <Total
+        exercises1={exercises1}
+        exercises2={exercises2}
+        exercises3={exercises3}
+      ></Total>
+    </div>
+  );
+};
 
-ReactDOM.render(<App />, document.getElementById('root'))
+ReactDOM.render(<App />, document.getElementById("root"));

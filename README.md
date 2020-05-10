@@ -4,6 +4,8 @@
 
 - TDD
 - reuse
+- serverless
+- refactor
 
 ## rule
 
