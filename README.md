@@ -6,6 +6,7 @@
 - reuse
 - serverless
 - refactor
+- data structure more compound, function more simple
 
 ## rule
 
