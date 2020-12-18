@@ -22,3 +22,8 @@
 ## version
 
 - object with function:when function as reference 通过引用调用该方法时， this 的值就变成了所谓的全局对象
+
+```
+npm install -g json-server
+npx json-server --port 3001 --watch db.json
+```

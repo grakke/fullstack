@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import axios from 'axios'
+import React, { useEffect, useState } from 'react'
 
 
 const Display = ({ persons, kw }) => {
@@ -14,16 +15,21 @@ const Display = ({ persons, kw }) => {
 }
 
 const App = () => {
-	const [persons, setPersons] = useState([
-		{ name: 'Arto Hellas', number: '040-123456' },
-		{ name: 'Ada Lovelace', number: '39-44-5323523' },
-		{ name: 'Dan Abramov', number: '12-43-234345' },
-		{ name: 'Mary Poppendieck', number: '39-23-6423122' }
-	])
+	const [persons, setPersons] = useState([])
 	const [newName, setNewName] = useState('')
 	const [newNumber, setNewNumber] = useState('')
 	const [kw, setKw] = useState('')
 
+	useEffect(() => {
+		console.log('effect')
+		axios
+			.get('http://localhost:3001/persons')
+			.then(response => {
+				console.log('promise fulfilled')
+				setPersons(response.data)
+			})
+	}, [])
+	console.log('render', persons.length, 'persons')
 
 	const nameObject = {
 		name: newName,
@@ -45,6 +51,7 @@ const App = () => {
 		<div>
 			<h1>Phonebook</h1>
 			<div>filter shown with <input value={kw} onChange={handleKwChange} /></div>
+			<Display persons={persons} kw={kw}></Display>
 			<h2>add a new</h2>
 			<form onSubmit={addNewName}>
 				<div>name: <input value={newName} onChange={handleNameChange} /></div>
@@ -54,7 +61,6 @@ const App = () => {
 				</div>
 			</form>
 
-			<Display persons={persons} kw={kw}></Display>
 		</div>
 	)
 }
