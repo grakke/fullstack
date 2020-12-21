@@ -1,6 +1,10 @@
-import axios from 'axios'
 import React, { useEffect, useState } from 'react'
+import personService from './services/persons'
 
+const deleteById = (id) => {
+	// TODO:名字已存在用户，进行更新
+	// personService.deleteById(id)
+}
 
 const Display = ({ persons, kw }) => {
 	persons = kw ? persons.filter(person => person['name'].toLowerCase().indexOf(kw.toLowerCase()) !== -1) : persons
@@ -8,9 +12,14 @@ const Display = ({ persons, kw }) => {
 	return (
 		<div>
 			<h2>Numbers</h2>
-			{persons.map((person, index) => <p key={index}> name:{person.name} number:{person.number}</p>
-			)}
-		</div>
+			{persons.map((person, index) => <p key={index}> name:{person.name} number:{person.number}
+				<button onClick={deleteById(person.id)} >
+					delete
+				</button>
+			</p>
+			)
+			}
+		</div >
 	)
 }
 
@@ -22,14 +31,12 @@ const App = () => {
 
 	useEffect(() => {
 		console.log('effect')
-		axios
-			.get('http://localhost:3001/persons')
-			.then(response => {
+		personService.getAll()
+			.then(initialPersons => {
 				console.log('promise fulfilled')
-				setPersons(response.data)
+				setPersons(initialPersons)
 			})
 	}, [])
-	console.log('render', persons.length, 'persons')
 
 	const nameObject = {
 		name: newName,
@@ -38,7 +45,13 @@ const App = () => {
 
 	const addNewName = (event) => {
 		event.preventDefault()
-		setPersons(persons.concat(nameObject))
+
+		personService.create(nameObject)
+			.then(returnedNote => {
+				setPersons(persons.concat(returnedNote))
+				setNewName('')
+			})
+
 		setNewName('')
 		setNewNumber('')
 	}
